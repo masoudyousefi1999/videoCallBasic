@@ -1,6 +1,6 @@
 import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
 
-  const socket = io("ws://localhost:5000/");
+  const socket = io("ws://localhost:3000/");
 const myPeer = new Peer();
 const user_selfi = document.querySelector(".user_selfi");
 const myViedo = document.createElement("video");
