@@ -20,7 +20,6 @@ const expressServer = app.listen(5000, () => {
 const io = require("socket.io")(expressServer);
 
 io.on("connection", (socket) => {
-    console.log("a user connected to server")
     socket.on("join-room",(ROOM_ID,userId) => {
         socket.join(ROOM_ID)
         socket.broadcast.emit("user connected",userId)
