@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/:id", (req, res) => {
-  res.render("index", { roomId: req.params.id });
+  res.render("index.ejs", { roomId: req.params.id });
 });
 
 const expressServer = app.listen(PORT, () => {
