@@ -1,4 +1,6 @@
-const socket = io();
+import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
+
+  const socket = io("ws://localhost:5000/");
 const myPeer = new Peer();
 const user_selfi = document.querySelector(".user_selfi");
 const myViedo = document.createElement("video");
@@ -12,7 +14,7 @@ myPeer.on("open", (id) => {
 navigator.mediaDevices
   .getUserMedia({ video: true, audio: true })
   .then((stream) => {
-    addUserVideo(myViedo, stream, "me");
+    addUserVideo(myViedo, stream);
     myPeer.on("call", (call) => {
       call.answer(stream);
       const userVideo = document.createElement("video");
@@ -26,17 +28,13 @@ navigator.mediaDevices
   })
   .catch((err) => console.log("error ocuerd", err));
 
-socket.on("user disconnected", (userId) => {
-  const removedVideo = document.getElementById(userId);
-  removedVideo.remove();
-});
 
 // functions
 function callUser(userId, stream) {
   const call = myPeer.call(userId, stream);
   const video = document.createElement("video");
   call.on("stream", (userStream) => {
-    addUserVideo(video, userStream, userId);
+    addUserVideo(video, userStream);
   });
 
   call.on("close", () => {
@@ -44,9 +42,8 @@ function callUser(userId, stream) {
   });
 }
 
-function addUserVideo(video, userStream, userId) {
+function addUserVideo(video, userStream) {
   video.srcObject = userStream;
-  video.id = userId;
   video.addEventListener("loadedmetadata", () => {
     video.play();
   });
